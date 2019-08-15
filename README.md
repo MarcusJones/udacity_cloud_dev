@@ -86,10 +86,12 @@ env-config   1      46m
 
 > The project demonstrates an understanding of CI and Github. All project code is stored in a GitHub repository and a link to the repository has been provided for reviewers. The student uses a CI tool to build the application.
 
-(Present github repo)
+Travis file included in root of project. 
 
-Travis 
+Travis builds: https://travis-ci.org/MarcusJones/udacity_cloud_dev
 
+
+![](/doc/travis-pass.png)
 
 ---
 
@@ -100,6 +102,11 @@ Travis
 ---
 
 > The project use continuous deployments (CD). A CD tool is in place to deploy new version of the app automatically to production. The way is described and easy to follow.
+
+Travis builds: https://travis-ci.org/MarcusJones/udacity_cloud_dev
+
+Travis.yml includes k8s and docker. 
+
 
 
 ### Criteria section: Container
@@ -145,21 +152,52 @@ Shell scripts are provided for each component, as well as a master docker-compos
 
 > The application runs on a cluster in the cloud. The project can be deployed to a kubernetes cluster. 
 
-Kubernetes nodes:
+Kubernetes status, by `kubectl get all`:
 ```
-ip-172-31-27-34.us-east-2.compute.internal    Ready    master   4h4m   v1.14.2
-ip-172-31-37-143.us-east-2.compute.internal   Ready    master   4h2m   v1.14.2
-ip-172-31-4-105.us-east-2.compute.internal    Ready    master   4h5m   v1.14.2
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/backend-feed-77b6d6b8b-kj77z    1/1     Running   0          164m
+pod/backend-feed-77b6d6b8b-qjrvf    1/1     Running   0          164m
+pod/backend-feed-77b6d6b8b-xq6ww    1/1     Running   0          164m
+pod/backend-user-b9f59c86b-j88xm    1/1     Running   0          160m
+pod/backend-user-b9f59c86b-v7pjf    1/1     Running   0          160m
+pod/frontend-64ffbd5967-7hfdb       1/1     Running   0          140m
+pod/frontend-64ffbd5967-fmnzg       1/1     Running   0          140m
+pod/pod-example                     1/1     Running   244        23h
+pod/reverseproxy-696f9f9b4f-c9cgq   1/1     Running   244        23h
+pod/reverseproxy-696f9f9b4f-vf225   1/1     Running   245        23h
+
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/backend-feed   ClusterIP   10.97.140.226    <none>        8080/TCP   145m
+service/backend-user   ClusterIP   10.97.91.167     <none>        8080/TCP   145m
+service/frontend       ClusterIP   10.106.197.183   <none>        8100/TCP   145m
+service/kubernetes     ClusterIP   10.96.0.1        <none>        443/TCP    26h
+service/reverseproxy   ClusterIP   10.103.216.162   <none>        8080/TCP   144m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend-feed   3/3     3            3           164m
+deployment.apps/backend-user   2/2     2            2           160m
+deployment.apps/frontend       2/2     2            2           140m
+deployment.apps/reverseproxy   2/2     2            2           23h
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/backend-feed-77b6d6b8b    3         3         3       164m
+replicaset.apps/backend-user-b9f59c86b    2         2         2       160m
+replicaset.apps/frontend-64ffbd5967       2         2         2       140m
+replicaset.apps/reverseproxy-696f9f9b4f   2         2         2       23h
 ```
 
 ---
 
 > The app can be upgraded via rolling-update. The students can deploy a new version of the application without downtime. 
 
+Kubernetes cluster supports rolling-update. 
+
 ---
 
 > A/B deployment of the application. Two versions of the 
 same app can run at the same and service traffic. 
+
+Kubernetes cluster supports A/B testing by changing each pod seperately. 
 
 ---
 
