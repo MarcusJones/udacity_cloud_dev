@@ -52,9 +52,7 @@ A `.env` file is executed to load environments. The .aws folder is mounted.
 | POSTGRES_AWS_MEDIA_BUCKET |
 | JWT_SECRET                |
 
-AWS credentials
-
-$HOME/.aws_udacity:/root/.aws
+AWS credentials are passed in as a secret, using `$HOME/.aws_udacity:/root/.aws`. 
 
 Confirmed deployment: 
 ```
@@ -152,7 +150,7 @@ Shell scripts are provided for each component, as well as a master docker-compos
 
 > The application runs on a cluster in the cloud. The project can be deployed to a kubernetes cluster. 
 
-Kubernetes status, by `kubectl get all`:
+Kubernetes status, using `kubectl get all`:
 ```
 NAME                                READY   STATUS    RESTARTS   AGE
 pod/backend-feed-77b6d6b8b-kj77z    1/1     Running   0          164m
@@ -201,4 +199,17 @@ Kubernetes cluster supports A/B testing by changing each pod seperately.
 
 ---
 
- > Monitoring. The application is monitored by Amazon CloudWatch
+ > Monitoring. The application is monitored by Amazon CloudWatch.
+
+ Cloud watch has been deployed to the cluster, below the pods: 
+
+ ```
+ NAME                     READY   STATUS    RESTARTS   AGE
+cloudwatch-agent-blcsz   1/1     Running   0          7s
+cloudwatch-agent-p42f2   1/1     Running   0          7s
+cloudwatch-agent-tzqb2   0/1     Pending   0          7s
+```
+
+Running cloudwatch: 
+
+![](doc/cloudwatch.png)
